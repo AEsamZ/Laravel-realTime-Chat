@@ -1,13 +1,12 @@
 require('./bootstrap');
 window.Vue=require('vue');
-// Vue.component('message', reuiqre('./components/message'));
-// import message from './components/message.vue';
-
-// Vue.component('message', message);
-
-// Vue.component("message", () => import("./components/message"));
 
 Vue.component('message', require('./components/message.vue').default);
+
+import Vue from 'vue'
+
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 
 
 

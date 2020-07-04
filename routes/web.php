@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('chat','ChatController@chat');
+Route::post('send','ChatController@send');
+
 
 Auth::routes();
 

@@ -1918,8 +1918,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['color', 'user'],
+  props: ['color', 'user', 'time'],
   computed: {
     className: function className() {
       return 'list-group-item-' + this.color;
@@ -25659,6 +25660,10 @@ var render = function() {
       2
     ),
     _vm._v(" "),
+    _c("small", { staticClass: "badge float-left", class: _vm.badgeClass }, [
+      _vm._v(_vm._s(_vm.time) + " ")
+    ]),
+    _vm._v(" "),
     _c("small", { staticClass: "badge float-right", class: _vm.badgeClass }, [
       _vm._v(_vm._s(_vm.user))
     ])
@@ -37860,7 +37865,16 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     chat: {
       message: [],
       user: [],
-      color: []
+      color: [],
+      time: []
+    },
+    typing: ''
+  },
+  watch: {
+    message: function message() {
+      Echo["private"]('chat').whisper('typing', {
+        name: this.message
+      });
     }
   },
   methods: {
@@ -37871,6 +37885,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         this.chat.message.push(this.message);
         this.chat.user.push('You');
         this.chat.color.push('success');
+        this.chat.time.push(this.getTime());
         axios.post('/send', {
           message: this.message
         }).then(function (response) {
@@ -37879,6 +37894,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           console.log(error);
         });
       }
+    },
+    getTime: function getTime() {
+      var time = new Date();
+      return time.getHours() + ':' + time.getMinutes();
     }
   },
   mounted: function mounted() {
@@ -37891,6 +37910,14 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       _this2.chat.user.push(e.user);
 
       _this2.chat.color.push('warning');
+
+      _this2.chat.time.push(_this2.getTime());
+    }).listenForWhisper('typing', function (e) {
+      if (e.name != '') {
+        _this2.typing = 'typing...';
+      } else {
+        _this2.typing = '';
+      }
     });
   }
 });

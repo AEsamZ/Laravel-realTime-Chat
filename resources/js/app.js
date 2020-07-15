@@ -7,7 +7,12 @@ import Vue from 'vue'
 
 import VueChatScroll from 'vue-chat-scroll'
 Vue.use(VueChatScroll)
+ 
+//this toaster is a package for notifications
+import Toaster from 'v-toaster'
+import 'v-toaster/dist/v-toaster.css'
 
+Vue.use(Toaster, {timeout: 5000})
 
 
 const app= new Vue({
@@ -20,7 +25,8 @@ const app= new Vue({
             color:[],
             time:[]
         },
-        typing:''
+        typing:'',
+        numberOfUsers:0
     },
     watch:{
         message(){
@@ -73,6 +79,19 @@ const app= new Vue({
         else{
             this.typing=''            
         }
+    });
+    Echo.join(`chat`)
+    .here((users) => {
+        this.numberOfUsers=users.length;
+    })
+    .joining((user) => {
+        this.numberOfUsers+=1;
+        this.$toaster.success(user.name+' joined!!')
+    })
+    .leaving((user) => {
+        this.numberOfUsers-=1;
+        this.$toaster.info(user.name+' left')
+
     });
     }
 });

@@ -18,7 +18,7 @@
     <div class="container">
         <div id="app" class="row">
             <div class="offset-4 offset-sm-1 col-sm-6">
-  <li class="list-group-item active">Chat Rooms</li>
+  <li class="list-group-item active">Chat Rooms<span class="badge badge-success">@{{numberOfUsers}}</span></li>
         <div class="badge badge-pill badge-primary">@{{typing}}</div>
         <ul class="list-group" v-chat-scroll>
   <message 

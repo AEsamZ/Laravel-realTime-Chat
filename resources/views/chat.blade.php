@@ -30,6 +30,7 @@
   </message>
 </ul>
 <input v-model='message' v-on:keyup.enter='send' type="text" class="form-control" placeholder="type your message">
+<a href="" class="btn-sm btn-danger" @click="deleteChat"> Delete Chat</a>
 </div>
         </div>
     </div>
